@@ -8,6 +8,7 @@ Local MVP frontend for the OneBSJ Fun Run Registration System.
 - TypeScript
 - Plain CSS
 - Browser `fetch` API client
+- `qrcode.react` for local QR rendering
 
 ## Local Setup
 
@@ -60,6 +61,10 @@ The frontend is aligned to the FastAPI routes present there:
 
 - `POST /api/registrations`
 - `GET /api/registrations/:registration_id`
+- `POST /api/payments/:registration_id/create`
+- `GET /api/payments/:registration_id`
+- `POST /api/payments/:registration_id/simulate-paid`
+- `POST /api/payments/webhook`
 - `POST /api/admin/login`
 - `GET /api/admin/dashboard/summary`
 - `GET /api/admin/registrations`
@@ -75,3 +80,15 @@ npm run dev
 npm run build
 npm run lint
 ```
+
+## Local Payment Test
+
+1. Start the backend at `http://127.0.0.1:8000`.
+2. Start this frontend with `npm run dev`.
+3. Register a runner from `/register`.
+4. The app redirects to `/payment/:registration_id`.
+5. The payment page creates or loads a backend payment session and renders a QR
+   code from `qr_code_payload`.
+6. In development mode, click `Simulate payment success`.
+7. The backend marks payment as paid, assigns a bib, sends mock SMS, and the
+   page refreshes to the confirmed state.

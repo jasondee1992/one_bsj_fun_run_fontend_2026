@@ -4,6 +4,7 @@ import type {
   AdminSummary,
   ApiEnvelope,
   PaginatedRegistrations,
+  PaymentSession,
   Registration,
   RegistrationFilters,
   RegistrationPayload,
@@ -127,6 +128,22 @@ export const api = {
 
   getRegistration(id: string | number) {
     return request<Registration>(`/registrations/${id}`);
+  },
+
+  createPaymentSession(registrationId: string | number) {
+    return request<PaymentSession>(`/payments/${registrationId}/create`, {
+      method: "POST",
+    });
+  },
+
+  getPaymentSession(registrationId: string | number) {
+    return request<PaymentSession>(`/payments/${registrationId}`);
+  },
+
+  simulatePaymentSuccess(registrationId: string | number) {
+    return request<PaymentSession>(`/payments/${registrationId}/simulate-paid`, {
+      method: "POST",
+    });
   },
 
   adminLogin(username: string, password: string) {

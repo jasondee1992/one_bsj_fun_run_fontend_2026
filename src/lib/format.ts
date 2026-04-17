@@ -27,9 +27,11 @@ export function paymentStatusOf(registration?: Partial<Registration> | null) {
 
   const value = String(raw).toUpperCase();
 
+  if (value === "AWAITING_PAYMENT") return "awaiting_payment";
   if (value === "PENDING_PAYMENT" || value === "PENDING") return "pending";
   if (value === "PAID") return "paid";
   if (value === "PAYMENT_FAILED" || value === "FAILED") return "failed";
+  if (value === "EXPIRED") return "expired";
   if (value === "CANCELLED" || value === "CANCELED") return "cancelled";
 
   return "unknown" as PaymentStatus;

@@ -179,3 +179,77 @@ timestamp fields.
   `failed` -> `PAYMENT_FAILED`, `cancelled` -> `CANCELLED`.
 - The backend shirt size enum currently supports `XS`, `S`, `M`, `L`, `XL`,
   `2XL`, and `3XL`.
+
+## Payment Session Flow
+
+### Create payment session
+
+`POST /payments/:registration_id/create`
+
+Creates or refreshes the payment session for a registration. In local sandbox
+mode, the backend uses the mock provider and returns a QR payload.
+
+Expected response data:
+
+```json
+{
+  "registration_id": "REG-000001",
+  "participant_name": "Juan Santos Dela Cruz",
+  "race_category": "5K",
+  "shirt_size": "M",
+  "payment_reference": "PAY-000001",
+  "provider": "mock",
+  "payment_method": "qr",
+  "payment_status": "pending",
+  "amount": 0,
+  "currency": "PHP",
+  "qr_code_url": null,
+  "qr_code_payload": "onebsj://sandbox-payment?...",
+  "payment_url": null,
+  "expires_at": "2026-04-17T18:00:00",
+  "paid_at": null,
+  "sms_status": "not_sent",
+  "webhook_last_event": null,
+  "webhook_last_event_at": null,
+  "bib_number": null,
+  "is_confirmed": false
+}
+```
+
+### Get payment session
+
+`GET /payments/:registration_id`
+
+Returns the current payment session and normalized status.
+
+### Simulate paid
+
+`POST /payments/:registration_id/simulate-paid`
+
+Local-development endpoint. Marks payment as paid, assigns a bib, and triggers
+mock SMS confirmation.
+
+### Webhook
+
+`POST /payments/webhook`
+
+Accepts normalized provider events. Duplicate successful events are handled
+idempotently.
+
+Example:
+
+```json
+{
+  "source": "mock-provider",
+  "event_type": "PAYMENT_SUCCEEDED",
+  "external_event_id": "evt_123",
+  "data": {
+    "registration_id": "REG-000001",
+    "payment_reference": "PAY-000001",
+    "provider_transaction_id": "txn_123",
+    "amount": 500,
+    "currency": "PHP",
+    "status": "SUCCEEDED"
+  }
+}
+```

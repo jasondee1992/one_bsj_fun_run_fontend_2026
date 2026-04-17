@@ -647,6 +647,115 @@ svg {
   font-size: 1.05rem;
 }
 
+.payment-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.82fr) minmax(0, 1.18fr);
+  gap: 22px;
+  align-items: stretch;
+}
+
+.qr-panel {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.qr-surface {
+  min-height: 292px;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  border: 1px solid #cfd8d2;
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(17, 97, 73, 0.08), transparent),
+    #ffffff;
+}
+
+.qr-surface img {
+  max-width: 240px;
+  width: 100%;
+  height: auto;
+}
+
+.qr-surface svg {
+  width: min(230px, 100%);
+  height: auto;
+}
+
+.qr-empty {
+  min-height: 210px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.qr-empty strong {
+  color: var(--foreground);
+}
+
+.qr-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: #f7faf8;
+  border: 1px solid #e6ede8;
+}
+
+.qr-caption span {
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.qr-caption strong {
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.payment-detail-panel {
+  min-width: 0;
+}
+
+.payment-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.payment-facts div {
+  padding: 12px;
+  border: 1px solid #e6ede8;
+  border-radius: var(--radius);
+  background: #f7faf8;
+}
+
+.payment-facts dt {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.payment-facts dd {
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+.payment-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
 .field-grid {
   display: grid;
   gap: 14px;
@@ -928,12 +1037,14 @@ svg {
   background: var(--success-soft);
 }
 
-.status-pending {
+.status-pending,
+.status-awaiting_payment {
   color: var(--warning);
   background: var(--warning-soft);
 }
 
 .status-failed,
+.status-expired,
 .status-cancelled {
   color: var(--danger);
   background: var(--danger-soft);
@@ -1172,6 +1283,7 @@ td small {
 
 @media (max-width: 920px) {
   .registration-layout,
+  .payment-layout,
   .field-grid.two,
   .field-grid.three,
   .detail-grid,
@@ -1183,6 +1295,10 @@ td small {
   .event-panel {
     position: static;
     min-height: unset;
+  }
+
+  .payment-facts {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1212,6 +1328,10 @@ td small {
 
   .hero-runner {
     bottom: 150px;
+  }
+
+  .payment-actions {
+    display: grid;
   }
 
   .site-header,

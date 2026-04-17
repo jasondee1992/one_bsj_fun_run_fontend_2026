@@ -12,8 +12,10 @@ export type ShirtSize =
 
 export type PaymentStatus =
   | "pending"
+  | "awaiting_payment"
   | "paid"
   | "failed"
+  | "expired"
   | "cancelled"
   | "unknown";
 
@@ -58,8 +60,39 @@ export interface PaymentDetails {
   currency?: string;
   status?: PaymentStatus | string;
   paid_at?: string;
+  expires_at?: string;
+  qr_code_url?: string | null;
+  qr_code_payload?: string | null;
+  payment_url?: string | null;
+  provider_response_raw?: string | null;
+  webhook_last_event?: string | null;
+  webhook_last_event_at?: string | null;
   created_at?: string;
   updated_at?: string;
+}
+
+export interface PaymentSession {
+  registration_id: string;
+  participant_name: string;
+  race_category: string;
+  shirt_size: string;
+  payment_reference: string;
+  provider: string;
+  payment_method: string;
+  payment_status: PaymentStatus | string;
+  amount: number;
+  currency: string;
+  qr_code_url?: string | null;
+  qr_code_payload?: string | null;
+  payment_url?: string | null;
+  expires_at?: string | null;
+  paid_at?: string | null;
+  raw_response?: Record<string, unknown> | null;
+  sms_status: string;
+  webhook_last_event?: string | null;
+  webhook_last_event_at?: string | null;
+  bib_number?: string | null;
+  is_confirmed: boolean;
 }
 
 export interface Registration extends RegistrationPayload {

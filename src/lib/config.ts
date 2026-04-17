@@ -5,4 +5,7 @@ export const API_BASE_URL =
 export const EVENT_NAME =
   process.env.NEXT_PUBLIC_EVENT_NAME ?? "OneBSJ Fun Run 2026";
 
+export const PAYMENT_PROVIDER =
+  process.env.NEXT_PUBLIC_PAYMENT_PROVIDER ?? "mock";
+
 export const ADMIN_TOKEN_STORAGE_KEY = "onebsj_admin_token";
